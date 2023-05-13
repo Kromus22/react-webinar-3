@@ -11,6 +11,11 @@ function App({ store }) {
 
   const list = store.getState().list;
 
+  const handleDelete = (evt, item) => {
+    evt.stopPropagation();
+    store.deleteItem(item);
+  }
+
   return (
     <div className='App'>
       <div className='App-head'>
@@ -30,7 +35,7 @@ function App({ store }) {
                   <span>{item.selectCount ? ` | Выделяли ${item.selectCount} ${declOfNum(item.selectCount)}` : ''}</span>
                 </div>
                 <div className='Item-actions'>
-                  <button onClick={() => store.deleteItem(item.code)}>
+                  <button onClick={(evt) => handleDelete(evt, item.code)}>
                     Удалить
                   </button>
                 </div>
