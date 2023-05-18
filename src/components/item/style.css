@@ -1,7 +1,7 @@
 .Item {
   display: flex;
   justify-content: flex-start;
-  transition: background-color 1s;
+  align-items: center;
 }
 
 .Item_selected {
@@ -14,12 +14,19 @@
 }
 
 .Item-title {
-  width: 100%;
+  width: 60%;
   padding: 20px 10px;
 }
 
 .Item-actions {
   display: flex;
   justify-content: flex-end;
+  margin-left: auto;
   padding: 20px 20px 20px 10px;
+  gap: 15px;
+}
+
+.Item-price {
+  display: flex;
+  gap: 62px;
 }

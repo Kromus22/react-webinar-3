@@ -1,17 +1,20 @@
-import React, {useCallback} from 'react';
+import React, { useCallback, useState } from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
+import Modal from './components/modal';
 
 /**
  * Приложение
  * @param store {Store} Хранилище состояния приложения
  * @returns {React.ReactElement}
  */
-function App({store}) {
+function App({ store }) {
 
   const list = store.getState().list;
+
+  const [modal, setModal] = useState(false);
 
   const callbacks = {
     onDeleteItem: useCallback((code) => {
@@ -24,16 +27,31 @@ function App({store}) {
 
     onAddItem: useCallback(() => {
       store.addItem();
-    }, [store])
+    }, [store]),
+
+    onOpenCart: useCallback(() => {
+      setModal(true);
+    }, [])
   }
 
   return (
     <PageLayout>
-      <Head title='Приложение на чистом JS'/>
-      <Controls onAdd={callbacks.onAddItem}/>
-      <List list={list}
-            onDeleteItem={callbacks.onDeleteItem}
-            onSelectItem={callbacks.onSelectItem}/>
+      <Head title='Магазин' />
+      <Controls
+        modal={modal}
+        setModal={setModal}
+        list={list} />
+      <List
+        list={list}
+        onDeleteItem={callbacks.onDeleteItem}
+        onSelectItem={callbacks.onSelectItem}
+        onOpenCart={callbacks.onOpenCart} />
+      {modal &&
+        (<Modal
+          modal={modal}
+          setModal={setModal}
+          list={list}
+        />)}
     </PageLayout>
   );
 }
