@@ -54,7 +54,7 @@
   align-items: center;
 }
 
-.modal__footer_title {
+.modal-footer_title {
   font-weight: 700;
   font-size: 18px;
   line-height: 21px;
@@ -66,5 +66,5 @@
   font-size: 18px;
   line-height: 21px;
   text-align: right;
-  margin-right: 70px;
+  margin-right: 90px;
 }

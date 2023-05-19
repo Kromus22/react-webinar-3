@@ -8,9 +8,16 @@ import CartItem from "../cartItem";
 // и необходимо просто сделать новый компонент. ну ок, сделал просто новый.
 function Modal({ cartList, setModal, total, onDeleteItem }) {
 
+  const onCloseModel = (e) => {
+    if (e.currentTarget === e.target) {
+      setModal(false);
+    }
+  };
+
   return (
     <>
-      <div className={'Modal-background'}>
+      <div className={'Modal-background'}
+        onClick={onCloseModel}>
         <div className={'Modal-container'}>
           <div className={'Modal-header'}>
             <h1 className={'Modal-title'}>Корзина</h1>
@@ -32,7 +39,7 @@ function Modal({ cartList, setModal, total, onDeleteItem }) {
 
           </div>
           <div className={'Modal-footer'}>
-            <h3 className={'Modal-title'}>Итого</h3>
+            <h3 className={'modal-footer_title'}>Итого</h3>
             <h3 className={'Modal-count'}>{total.toLocaleString('ru-RU')} ₽</h3>
           </div>
         </div>
