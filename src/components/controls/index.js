@@ -1,28 +1,34 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
-import Modal from "../modal";
+import { plural } from "../../utils";
 
-function Controls({ modal, setModal, onOpenCart }) {
+function Controls({ setModal, count, total }) {
 
   return (
     <>
       <div className='Controls'>
         <div>В корзине:</div>
-        <div className='Controls-price'>2 товара / 223 ₽</div>
-        <button onClick={() => onOpenCart()}>Перейти</button>
-      </div>
 
+        {count > 0 ?
+          <div className='Controls-price'>
+            {count} {plural(count, { one: 'товар', few: 'товара', many: 'товаров' })} /
+            {total.toLocaleString('ru-RU')} ₽</div> :
+          <div className='Controls-price'>пусто</div>
+        }
+
+        <button onClick={() => setModal(true)}>Перейти</button>
+      </div>
     </>
   )
 }
 
 Controls.propTypes = {
-  onOpenModal: PropTypes.func
+  setModal: PropTypes.func
 };
 
 Controls.defaultProps = {
-  onOpenModal: () => { }
+  setModal: () => { }
 }
 
 export default React.memo(Controls);

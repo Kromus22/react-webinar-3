@@ -62,27 +62,39 @@ class Store {
     })
   };
 
-  /**
-   * Выделение записи по коду
-   * @param code
-   */
-  selectItem(code) {
+  addToCart(item) {
+    if (this.state.cartList.find(cartItem => cartItem.code === item.code)) {
+      this.setState({
+        ...this.state,
+        cartList: this.state.cartList.map(cartItem => {
+          if (item.code === cartItem.code) {
+            return {
+              ...cartItem,
+              count: cartItem.count + 1
+            }
+          }
+          return cartItem
+        })
+      })
+    } else {
+      this.setState({
+        ...this.state,
+        cartList: [...this.state.cartList, {
+          code: item.code,
+          title: item.title,
+          price: item.price,
+          count: 1,
+        }]
+      })
+    }
+  };
+
+  deleteCartItem(code) {
     this.setState({
       ...this.state,
-      list: this.state.list.map(item => {
-        if (item.code === code) {
-          // Смена выделения и подсчёт
-          return {
-            ...item,
-            selected: !item.selected,
-            count: item.selected ? item.count : item.count + 1 || 1,
-          };
-        }
-        // Сброс выделения если выделена
-        return item.selected ? { ...item, selected: false } : item;
-      })
+      cartList: this.state.cartList.filter(item => item.code !== code)
     })
-  }
+  };
 }
 
 export default Store;

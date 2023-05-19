@@ -3,15 +3,13 @@ import PropTypes from 'prop-types';
 import Item from "../item";
 import './style.css';
 
-function List({ modal, list, products }) {
-
-  const items = modal ? products : list;
+function List({ list, onAddToCart }) {
 
   return (
     <div className='List'>{
       list.map(item =>
         <div key={item.code} className='List-item'>
-          <Item item={item} />
+          <Item item={item} onAddToCart={onAddToCart} />
         </div>
       )}
     </div>
@@ -22,13 +20,11 @@ List.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.number
   })).isRequired,
-  onDeleteItem: PropTypes.func,
-  onSelectItem: PropTypes.func
+  onAddToCart: PropTypes.func,
 };
 
 List.defaultProps = {
-  onDeleteItem: () => { },
-  onSelectItem: () => { },
+  onAddToCart: () => { },
 }
 
 export default React.memo(List);

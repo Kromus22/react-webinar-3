@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
@@ -13,44 +13,50 @@ import Modal from './components/modal';
 function App({ store }) {
 
   const list = store.getState().list;
+  const cartList = store.getState().cartList;
 
   const [modal, setModal] = useState(false);
+  const [totalSum, setTotalSum] = useState(0);
 
   const callbacks = {
-    onDeleteItem: useCallback((code) => {
-      store.deleteItem(code);
-    }, [store]),
-
-    onSelectItem: useCallback((code) => {
-      store.selectItem(code);
+    onDeleteCartItem: useCallback((code) => {
+      store.deleteCartItem(code);
     }, [store]),
 
     onAddItem: useCallback(() => {
       store.addItem();
     }, [store]),
 
-    onOpenCart: useCallback(() => {
-      setModal(true);
-    }, [])
+    onAddToCart: useCallback((item) => {
+      store.addToCart(item);
+    }, [store]),
   }
+
+  useEffect(() => {
+    let sum = 0
+
+    cartList.map(cartItem => {
+      sum += (cartItem.price * cartItem.count)
+    })
+    setTotalSum(sum)
+  }, [cartList])
 
   return (
     <PageLayout>
       <Head title='Магазин' />
       <Controls
-        modal={modal}
         setModal={setModal}
-        list={list} />
+        count={cartList.length}
+        total={totalSum} />
       <List
         list={list}
-        onDeleteItem={callbacks.onDeleteItem}
-        onSelectItem={callbacks.onSelectItem}
-        onOpenCart={callbacks.onOpenCart} />
+        onAddToCart={callbacks.onAddToCart} />
       {modal &&
         (<Modal
-          modal={modal}
+          cartList={cartList}
           setModal={setModal}
-          list={list}
+          total={totalSum}
+          onDeleteItem={callbacks.onDeleteCartItem}
         />)}
     </PageLayout>
   );

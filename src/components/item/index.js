@@ -1,19 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import { plural } from "../../utils";
 import './style.css';
 
 function Item(props) {
 
-  // Счётчик выделений
-  const [count, setCount] = useState(0);
-
-  // const callbacks = {
-  //   onDelete: (e) => {
-  //     e.stopPropagation();
-  //     props.onDelete(props.item.code);
-  //   }
-  // }
+  const callbacks = {
+    onAddToCart: () => {
+      props.onAddToCart(props.item);
+    }
+  }
 
   return (
     <div className='Item'>
@@ -23,20 +18,16 @@ function Item(props) {
       </div>
       <div className='Item-actions'>
         <div className="Item-price">
-          <div >{props.item.price} ₽</div>
+          <div >{props.item.price.toLocaleString('ru-RU')} ₽</div>
           {props.item.count && (
             <div>{props.item.count} шт</div>
           )}
         </div>
-        {!props.modal ? (
-          <button onClick={() => props.addProduct(props.item)}>
-            Добавить
-          </button>
-        ) : (
-          <button onClick={() => props.removeProduct(props.item)}>
-            Удалить
-          </button>
-        )}
+
+        <button onClick={callbacks.onAddToCart}>
+          Добавить
+        </button>
+
       </div>
     </div>
   );
@@ -46,16 +37,13 @@ Item.propTypes = {
   item: PropTypes.shape({
     code: PropTypes.number,
     title: PropTypes.string,
-    selected: PropTypes.bool,
     count: PropTypes.number
   }).isRequired,
-  onDelete: PropTypes.func,
-  onSelect: PropTypes.func
+  onAddToCart: PropTypes.func
 };
 
 Item.defaultProps = {
-  onDelete: () => { },
-  onSelect: () => { },
+  onAddToCart: () => { },
 }
 
 export default React.memo(Item);
