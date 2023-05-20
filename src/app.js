@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import React, { useCallback, useState } from 'react';
 import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
@@ -14,13 +14,15 @@ function App({ store }) {
 
   const list = store.getState().list;
   const cartList = store.getState().cartList;
+  const cartCount = cartList.length;
+  const totalSum = store.getState().totalSum;
 
   const [modal, setModal] = useState(false);
-  const [totalSum, setTotalSum] = useState(0);
 
   const callbacks = {
     onDeleteCartItem: useCallback((code) => {
       store.deleteCartItem(code);
+      store.setTotalSum();
     }, [store]),
 
     onAddItem: useCallback(() => {
@@ -29,24 +31,16 @@ function App({ store }) {
 
     onAddToCart: useCallback((item) => {
       store.addToCart(item);
+      store.setTotalSum();
     }, [store]),
   }
-
-  useEffect(() => {
-    let sum = 0
-
-    cartList.map(cartItem => {
-      sum += (cartItem.price * cartItem.count)
-    })
-    setTotalSum(sum)
-  }, [cartList])
 
   return (
     <PageLayout>
       <Head title='Магазин' />
       <Controls
         setModal={setModal}
-        count={cartList.length}
+        count={cartCount}
         total={totalSum} />
       <List
         list={list}

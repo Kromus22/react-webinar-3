@@ -62,6 +62,8 @@ class Store {
     })
   };
 
+
+  //Добавление товара в корзину
   addToCart(item) {
     if (this.state.cartList.find(cartItem => cartItem.code === item.code)) {
       this.setState({
@@ -89,12 +91,23 @@ class Store {
     }
   };
 
+  //Удаление товара из корзины
   deleteCartItem(code) {
     this.setState({
       ...this.state,
       cartList: this.state.cartList.filter(item => item.code !== code)
     })
   };
+
+  //Подсчёт суммы товаров
+  setTotalSum() {
+    this.setState({
+      ...this.state,
+      totalSum: this.state.cartList.reduce((sum, item) => {
+        return item.price * item.count + sum;
+      }, 0),
+    });
+  }
 }
 
 export default Store;
