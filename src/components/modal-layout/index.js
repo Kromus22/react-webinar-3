@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import './style.css';
 import Modal from "../modal";
 
-function ModalLayout({ setModal, cartList, total, onDeleteItem }) {
+function ModalLayout(props) {
   const onCloseModel = (e) => {
     if (e.currentTarget === e.target) {
-      setModal(false);
+      props.setModal(false);
     }
   };
 
@@ -14,11 +14,7 @@ function ModalLayout({ setModal, cartList, total, onDeleteItem }) {
     <div className={'Modal-background'}
       onClick={onCloseModel}>
       <div className={'Modal-container'}>
-        <Modal
-          setModal={setModal}
-          cartList={cartList}
-          total={total}
-          onDeleteItem={onDeleteItem} />
+        {props.children}
       </div>
     </div>
   );

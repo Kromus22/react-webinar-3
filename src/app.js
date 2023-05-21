@@ -4,6 +4,7 @@ import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
 import ModalLayout from './components/modal-layout';
+import Modal from './components/modal';
 
 /**
  * Приложение
@@ -46,12 +47,14 @@ function App({ store }) {
         list={list}
         onAddToCart={callbacks.onAddToCart} />
       {modal &&
-        (<ModalLayout
-          setModal={setModal}
-          cartList={cartList}
-          total={totalSum}
-          onDeleteItem={callbacks.onDeleteCartItem}
-        />)}
+        (<ModalLayout setModal={setModal}>
+          <Modal
+            setModal={setModal}
+            cartList={cartList}
+            total={totalSum}
+            onDeleteItem={callbacks.onDeleteCartItem} />
+        </ModalLayout>
+        )}
     </PageLayout>
   );
 }

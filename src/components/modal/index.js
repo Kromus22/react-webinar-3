@@ -16,9 +16,10 @@ function Modal({ cartList, setModal, total, onDeleteItem }) {
         <button className={'Modal-close'} onClick={() => setModal(false)}>Закрыть</button>
       </div>
 
-      <List
+      {cartList.length > 0 ? <List
         cartList={cartList}
-        onDelete={onDeleteItem} />
+        onDelete={onDeleteItem} /> :
+        <div className="Modal-empty">Ваша корзина пуста</div>}
       <div className={'Modal-footer'}>
         <h3 className={'modal-footer_title'}>Итого</h3>
         <h3 className={'Modal-count'}>{total.toLocaleString('ru-RU')} ₽</h3>
