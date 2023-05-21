@@ -2,14 +2,23 @@ import React from "react";
 import PropTypes from 'prop-types';
 import Item from "../item";
 import './style.css';
+import CartItem from "../cart-item";
 
-function List({ list, onAddToCart }) {
+function List(props) {
 
   return (
     <div className='List'>{
-      list.map(item =>
+      props.list && props.list.map(item =>
         <div key={item.code} className='List-item'>
-          <Item item={item} onAddToCart={onAddToCart} />
+          <Item item={item}
+            onAddToCart={props.onAddToCart} />
+        </div>
+      )}
+
+      {props.cartList && props.cartList.map(item =>
+        <div key={item.code} className='Modal-list'>
+          <CartItem item={item}
+            onDelete={props.onDelete} />
         </div>
       )}
     </div>
@@ -19,7 +28,7 @@ function List({ list, onAddToCart }) {
 List.propTypes = {
   list: PropTypes.arrayOf(PropTypes.shape({
     code: PropTypes.number
-  })).isRequired,
+  })),
   onAddToCart: PropTypes.func,
 };
 
