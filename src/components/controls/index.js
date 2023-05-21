@@ -12,11 +12,9 @@ function Controls({ setModal, count, total }) {
 
         {count > 0 ?
           <div className='Controls-price'>
-            {count} {plural(count, { one: 'товар', few: 'товара', many: 'товаров' })} /
-            {total.toLocaleString('ru-RU')} ₽</div> :
+            {count} {plural(count, { one: 'товар', few: 'товара', many: 'товаров' })} / {total.toLocaleString('ru-RU')} ₽</div> :
           <div className='Controls-price'>пусто</div>
         }
-
         <button onClick={() => setModal(true)}>Перейти</button>
       </div>
     </>
