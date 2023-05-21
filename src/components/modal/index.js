@@ -8,52 +8,48 @@ import CartItem from "../cart-item";
 // и необходимо просто сделать новый компонент. ну ок, сделал просто новый.
 function Modal({ cartList, setModal, total, onDeleteItem }) {
 
-  const onCloseModel = (e) => {
-    if (e.currentTarget === e.target) {
-      setModal(false);
-    }
-  };
-
   return (
     <>
-      <div className={'Modal-background'}
-        onClick={onCloseModel}>
-        <div className={'Modal-container'}>
-          <div className={'Modal-header'}>
-            <h1 className={'Modal-title'}>Корзина</h1>
-            <button className={'Modal-close'} onClick={() => setModal(false)}>Закрыть</button>
-          </div>
+      <div className={'Modal-header'}>
+        <h1 className={'Modal-title'}>Корзина</h1>
+        <button className={'Modal-close'} onClick={() => setModal(false)}>Закрыть</button>
+      </div>
 
-          <div className={'Modal-list'}>
-            {cartList.length > 0 ?
-              cartList.map(item =>
-                <div key={item.code} className='List-item'>
-                  <CartItem
-                    item={item}
-                    onDelete={onDeleteItem}
-                  />
-                </div>
-              ) :
-              <div className="Modal-empty">Ваша корзина пуста</div>
-            }
+      <div className={'Modal-list'}>
+        {cartList.length > 0 ?
+          cartList.map(item =>
+            <div key={item.code} className='List-item'>
+              <CartItem
+                item={item}
+                onDelete={onDeleteItem}
+              />
+            </div>
+          ) :
+          <div className="Modal-empty">Ваша корзина пуста</div>
+        }
 
-          </div>
-          <div className={'Modal-footer'}>
-            <h3 className={'modal-footer_title'}>Итого</h3>
-            <h3 className={'Modal-count'}>{total.toLocaleString('ru-RU')} ₽</h3>
-          </div>
-        </div>
+      </div>
+      <div className={'Modal-footer'}>
+        <h3 className={'modal-footer_title'}>Итого</h3>
+        <h3 className={'Modal-count'}>{total.toLocaleString('ru-RU')} ₽</h3>
       </div>
     </>
   )
 }
 
 Modal.propTypes = {
-  setModal: PropTypes.func
+  setModal: PropTypes.func,
+  cartList: PropTypes.arrayOf(PropTypes.shape({
+    code: PropTypes.number
+  })).isRequired,
+  total: PropTypes.number.isRequired,
+  onDeleteItem: PropTypes.func,
 };
 
 Modal.defaultProps = {
-  setModal: () => { }
+  setModal: () => { },
+  total: 0,
+  onDeleteItem: () => { },
 }
 
 export default React.memo(Modal);

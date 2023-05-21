@@ -3,7 +3,7 @@ import List from "./components/list";
 import Controls from "./components/controls";
 import Head from "./components/head";
 import PageLayout from "./components/page-layout";
-import Modal from './components/modal';
+import ModalLayout from './components/modal-layout';
 
 /**
  * Приложение
@@ -46,9 +46,9 @@ function App({ store }) {
         list={list}
         onAddToCart={callbacks.onAddToCart} />
       {modal &&
-        (<Modal
-          cartList={cartList}
+        (<ModalLayout
           setModal={setModal}
+          cartList={cartList}
           total={totalSum}
           onDeleteItem={callbacks.onDeleteCartItem}
         />)}
