@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from 'prop-types';
 import './style.css';
-import CartItem from "../cartItem";
+import CartItem from "../cart-item";
 
 // какое-то время ковырял Item, чтобы юзать его и тут, и в List
 // в итоге почитал сообщения в чате, кажется, что это не нужно

@@ -19,9 +19,6 @@ function Item(props) {
       <div className='Item-actions'>
         <div className="Item-price">
           <div >{props.item.price.toLocaleString('ru-RU')} ₽</div>
-          {props.item.count && (
-            <div>{props.item.count} шт</div>
-          )}
         </div>
 
         <button onClick={callbacks.onAddToCart}>
